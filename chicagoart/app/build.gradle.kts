@@ -28,7 +28,11 @@ android {
          *
          * This then gets pulled in to BuildConfig in build.gradle.kts using below BuildConfigField
          */
-        buildConfigField("String", "CONTACT_EMAIL_FOR_USER_AGENT", "\"${System.getenv("CONTACT_EMAIL_FOR_USER_AGENT")}\"")
+        val contactEmail = System.getenv("CONTACT_EMAIL_FOR_USER_AGENT")
+        if (contactEmail.isNullOrBlank()) {
+            error("CONTACT_EMAIL_FOR_USER_AGENT environment variable is not set. Please set it before building. See README.md for more details")
+        }
+        buildConfigField("String", "CONTACT_EMAIL_FOR_USER_AGENT", "\"$contactEmail\"")
     }
 
     buildTypes {
@@ -126,13 +130,3 @@ hilt {
 kapt {
     correctErrorTypes = true
 }
-
-
-// We are using the secrets gradle plugin to keep our email out of version control.
-// Ps The email is required to be placed in all Api calls to the Chicago arts Web Api
-/*
-buildscript {
-    dependencies {
-        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
-    }
-}*/

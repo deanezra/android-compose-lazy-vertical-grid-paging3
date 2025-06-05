@@ -68,7 +68,7 @@ To run this project:
      1. Open the System Properties (Right-click on 'This PC' > Properties > Advanced system settings)
      2. Click on 'Environment Variables'
      3. Under 'User variables', click 'New'
-     4. Set the variable name as `CHICAGO_ART_API_CONTACT_EMAIL`
+     4. Set the variable name as `CONTACT_EMAIL_FOR_USER_AGENT`
      5. Set the variable value as your contact email
      6. Click 'OK' to save
 
@@ -77,7 +77,7 @@ To run this project:
      2. Edit your shell profile file (e.g., `~/.zshrc` for Zsh or `~/.bash_profile` for Bash)
      3. Add the following line:
         ```
-        export CHICAGO_ART_API_CONTACT_EMAIL="your.email@example.com"
+        export CONTACT_EMAIL_FOR_USER_AGENT="your.email@example.com"
         ```
      4. Save the file and run `source ~/.zshrc` (or `source ~/.bash_profile` for Bash)
 
@@ -87,7 +87,7 @@ Note:
 The environment variable is then read from the OS via the project's `build.gradle.kts` file, using the `buildConfigField`:
 
    ```kotlin
-   buildConfigField("String", "CONTACT_EMAIL", "\"${System.getenv("CHICAGO_ART_API_CONTACT_EMAIL")}\"")
+   buildConfigField("String", "CONTACT_EMAIL", "\"${System.getenv("CONTACT_EMAIL_FOR_USER_AGENT")}\"")
 
    ```
    
