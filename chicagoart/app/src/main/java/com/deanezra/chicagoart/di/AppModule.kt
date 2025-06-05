@@ -1,8 +1,8 @@
-package com.example.chicagoart.di
+package com.deanezra.chicagoart.di
 
-import com.example.chicagoart.data.remote.ApiService
-import com.example.chicagoart.data.repository.ItemRepository
-import com.example.chicagoart.data.repository.ItemRepositoryImpl
+import com.deanezra.chicagoart.data.remote.ApiService
+import com.deanezra.chicagoart.data.repository.ItemRepository
+import com.deanezra.chicagoart.data.repository.ItemRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

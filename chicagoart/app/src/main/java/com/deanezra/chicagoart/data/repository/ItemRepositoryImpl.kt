@@ -1,8 +1,8 @@
-package com.example.chicagoart.data.repository
+package com.deanezra.chicagoart.data.repository
 
-import com.example.chicagoart.data.mapper.toDomain
-import com.example.chicagoart.data.remote.ApiService
-import com.example.chicagoart.domain.model.Item
+import com.deanezra.chicagoart.data.mapper.toDomain
+import com.deanezra.chicagoart.data.remote.ApiService
+import com.deanezra.chicagoart.domain.model.Item
 import javax.inject.Inject
 
 class ItemRepositoryImpl @Inject constructor(

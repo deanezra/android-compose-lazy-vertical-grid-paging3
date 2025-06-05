@@ -1,4 +1,4 @@
-package com.example.chicagoart
+package com.deanezra.chicagoart
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

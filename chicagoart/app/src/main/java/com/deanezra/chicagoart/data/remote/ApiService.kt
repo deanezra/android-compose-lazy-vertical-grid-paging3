@@ -1,4 +1,4 @@
-package com.example.chicagoart.data.remote
+package com.deanezra.chicagoart.data.remote
 
 import retrofit2.http.GET
 

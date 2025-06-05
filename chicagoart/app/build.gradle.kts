@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.chicagoart"
+    namespace = "com.deanezra.chicagoart"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.chicagoart"
+        applicationId = "com.deanezra.chicagoart"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

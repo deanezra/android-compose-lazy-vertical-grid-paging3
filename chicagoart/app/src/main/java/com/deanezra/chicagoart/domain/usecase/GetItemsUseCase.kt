@@ -1,7 +1,7 @@
-package com.example.chicagoart.domain.usecase
+package com.deanezra.chicagoart.domain.usecase
 
-import com.example.chicagoart.data.repository.ItemRepository
-import com.example.chicagoart.domain.model.Item
+import com.deanezra.chicagoart.data.repository.ItemRepository
+import com.deanezra.chicagoart.domain.model.Item
 import javax.inject.Inject
 
 class GetItemsUseCase @Inject constructor(

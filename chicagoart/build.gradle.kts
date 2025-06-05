@@ -5,8 +5,6 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
 
     alias(libs.plugins.kotlin.kapt)
-    //kotlin("kapt") version "1.9.22"
     alias(libs.plugins.hilt.android) apply false
-    //id("com.google.dagger.hilt.android") version "2.48" apply false
 
 }

@@ -1,9 +1,9 @@
-package com.example.chicagoart.viewmodel
+package com.deanezra.chicagoart.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.chicagoart.domain.model.Item
-import com.example.chicagoart.domain.usecase.GetItemsUseCase
+import com.deanezra.chicagoart.domain.model.Item
+import com.deanezra.chicagoart.domain.usecase.GetItemsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

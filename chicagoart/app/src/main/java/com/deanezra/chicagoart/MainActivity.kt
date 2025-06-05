@@ -1,4 +1,4 @@
-package com.example.chicagoart
+package com.deanezra.chicagoart
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,8 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.chicagoart.ui.theme.ChicagoArtTheme
-import com.example.chicagoart.viewmodel.ItemsViewModel
+import com.deanezra.chicagoart.ui.theme.ChicagoArtTheme
+import com.deanezra.chicagoart.viewmodel.ItemsViewModel
+
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 

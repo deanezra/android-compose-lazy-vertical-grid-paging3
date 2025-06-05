@@ -1,4 +1,4 @@
-package com.example.chicagoart.ui.theme
+package com.deanezra.chicagoart.ui.theme
 
 import android.app.Activity
 import android.os.Build
