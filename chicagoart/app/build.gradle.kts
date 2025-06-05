@@ -51,6 +51,13 @@ android {
         compose = true
         buildConfig = true
     }
+
+    // For robolectric testing:
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -105,6 +112,10 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
     testImplementation(libs.coroutines.test)
+    testImplementation(libs.robolectric)
+    //testImplementation(libs.robolectric.shadows.core)
+    testImplementation(libs.arch.core.testing)
+
 }
 
 // Optional, speeds up compilation time:
