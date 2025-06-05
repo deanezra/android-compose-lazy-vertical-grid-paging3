@@ -73,6 +73,13 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
 
+    // Paging library for support of pagination in Web API:
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
+
+    // Compose foundation for Grid support
+    implementation(libs.compose.foundation)
+
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

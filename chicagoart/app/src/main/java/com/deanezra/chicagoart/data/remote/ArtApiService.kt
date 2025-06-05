@@ -1,6 +1,5 @@
 package com.deanezra.chicagoart.data.remote
 
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -17,16 +16,19 @@ import retrofit2.http.Query
 // Use the ?fields=<fieldname>,... to specify the fields you want returned in your API response. For example:
 // https://api.artic.edu/api/v1/artworks/100?fields=id,title,artist_display,date_display,medium_display,image_id,artwork_type_title
 
+interface ArtApiService {
 
-interface ApiService {
+    companion object {
+        const val BASE_URL = "https://api.artic.edu/api/v1/"
+    }
 
     @GET("artworks/{id}?fields=id,title,artist_display,date_display,medium_display,image_id,artwork_type_title")
-    suspend fun fetchArtworkById(@Path("id") id: Int): ArtworksWrapperDto
+    suspend fun getArtworkById(@Path("id") id: Int): ArtworksResponseDto
 
-    @GET("artworks?fields=id,title,image_id")
-    suspend fun fetchArtworks(
-        @Query("limit") itemsPerPage: Int,
-        @Query("page") page: Int
-    ): ArtworksWrapperDto
+    @GET("artworks")
+    suspend fun getArtworks(
+        @Query("page") page: Int,
+        @Query("fields") fields: String = "id,title,image_id"
+    ): ArtworksResponseDto
 
 }

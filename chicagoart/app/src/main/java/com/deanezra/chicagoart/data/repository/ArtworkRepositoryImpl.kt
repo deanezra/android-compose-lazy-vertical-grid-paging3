@@ -1,20 +1,20 @@
 package com.deanezra.chicagoart.data.repository
 
-import com.deanezra.chicagoart.data.mapper.toDomain
-import com.deanezra.chicagoart.data.remote.ApiService
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import com.deanezra.chicagoart.data.network.ArtworksPagingSource
+import com.deanezra.chicagoart.data.remote.ArtApiService
 import com.deanezra.chicagoart.domain.model.Artwork
 import javax.inject.Inject
 
 class ArtworkRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val api: ArtApiService
 ) : ArtworkRepository {
-    companion object {
-        const val ITEMS_PER_PAGE = 20
-    }
 
-    override suspend fun fetchArtworks(): List<Artwork?> {
-        return apiService.fetchArtworks(ITEMS_PER_PAGE, 1).data.map {
-            it.toDomain()
-        }
+    override fun getArtworksPaged(): Pager<Int, Artwork> {
+        return Pager(
+            config = PagingConfig(pageSize = 12),
+            pagingSourceFactory = { ArtworksPagingSource(api) }
+        )
     }
 }

@@ -1,7 +1,6 @@
 package com.deanezra.chicagoart.data.mapper
 
 import com.deanezra.chicagoart.data.remote.ArtworkDto
-import com.deanezra.chicagoart.data.remote.ArtworksWrapperDto
 import com.deanezra.chicagoart.domain.model.Artwork
 
 /* Mapper extension for mapping ArtworkDto to Artwork domain model
@@ -17,19 +16,22 @@ import com.deanezra.chicagoart.domain.model.Artwork
  *
  * This conversion will be done by the mapper when converting from DTO to Domain object.
  */
-fun ArtworkDto.toDomain(): Artwork {
+fun ArtworkDto.toArtwork(): Artwork {
 
     val IMAGE_BASE_URL = "https://www.artic.edu/iiif/2/"
     val SMALL_IMAGE_POSTFIX = "/full/200,/0/default.jpg"
     val LARGE_IMAGE_POSTFIX = "/full/843,/0/default.jpg"
 
-    return Artwork(id = this.id,
-        title = this.title,
-        artist = this.artist?: "Unknown artist",
-        type = this.type?: "Unknown type",
-        medium = this.medium?: "Unknown medium",
-        date = this.date ?: "Unknown date",
-        smallImageUrl = "${IMAGE_BASE_URL}${this.imageId}${SMALL_IMAGE_POSTFIX}",
-        largeImageUrl = "${IMAGE_BASE_URL}${this.imageId}${LARGE_IMAGE_POSTFIX}",
+    return Artwork(
+        id = id,
+        title = title,
+        date = date_display,
+        artist = artist_display,
+        medium = medium_display,
+        type = artwork_type_title,
+        imageId = image_id,
+
+        smallImageUrl = "${IMAGE_BASE_URL}${image_id}${SMALL_IMAGE_POSTFIX}",
+        largeImageUrl = "${IMAGE_BASE_URL}${image_id}${LARGE_IMAGE_POSTFIX}",
     )
 }

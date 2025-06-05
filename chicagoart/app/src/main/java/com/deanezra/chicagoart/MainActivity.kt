@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,28 +16,28 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
 import com.deanezra.chicagoart.domain.model.Artwork
 import com.deanezra.chicagoart.ui.theme.ChicagoArtTheme
 import com.deanezra.chicagoart.viewmodel.ArtworksViewModel
+import android.util.Log
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,15 +48,50 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val itemsViewModel: ArtworksViewModel = hiltViewModel()
-            val items = itemsViewModel.artworkItems.collectAsState(initial = emptyList())
 
             ChicagoArtTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val firstItem = items.value.firstOrNull()
-                    if (firstItem != null) {
-                        ArtworkPhotoItem(firstItem)
-                    } else {
-                        Text("No Artworks Found")
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    ArtworksGridScreen()
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun ArtworksGridScreen(viewModel: ArtworksViewModel = hiltViewModel()) {
+    val artworks = viewModel.artworksPagingFlow.collectAsLazyPagingItems()
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(artworks.itemCount) { index ->
+            val artwork = artworks[index]
+            Log.d("ComposeGrid", "Binding item at index $index: $artwork")
+
+            artwork?.let {
+                ArtworkCard(it)
+            }
+        }
+
+        artworks.apply {
+            when {
+                loadState.append is LoadState.Loading -> {
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+                    }
+                }
+                loadState.append is LoadState.Error -> {
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        Text("Error loading more items", color = Color.Red)
                     }
                 }
             }
@@ -63,49 +99,43 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Composable
-fun ArtworkPhotoItem(artwork: Artwork) {
-    Card(
+fun ArtworkCard(artwork: Artwork) {
+    val imageUrl = artwork.imageId?.let {
+        "https://www.artic.edu/iiif/2/${it}/full/843,/0/default.jpg"
+    }
+
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp),
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+            .background(Color.White, RoundedCornerShape(8.dp))
+            .padding(8.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .background(Color.LightGray)
-                .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        if (imageUrl != null) {
             AsyncImage(
-                model = artwork.smallImageUrl,
-                contentDescription = "${artwork.title} by ${artwork.artist}",
+                model = imageUrl,
+                contentDescription = artwork.title,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
+                    .height(150.dp)
                     .fillMaxWidth()
-                    .aspectRatio(1f)  // Ensure consistent aspect ratio
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
+                    .clip(RoundedCornerShape(8.dp))
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = artwork.title, style = MaterialTheme.typography.bodySmall)
         }
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = artwork.title,
+            style = MaterialTheme.typography.bodyMedium,
+            maxLines = 2
+        )
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     ChicagoArtTheme {
         Greeting(name = "Android")
     }
-}
+}*/
