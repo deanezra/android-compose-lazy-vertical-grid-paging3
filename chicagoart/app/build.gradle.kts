@@ -19,6 +19,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        /* The chicago Art API requires all apps to provide the app name and email contact address in a custom
+         * user agent.
+         * To avoid leaking your email by committing it to version control,
+         * I import environment variable. Eg, add the following to your .zshrc (if your on Mac)
+         * eg. export CONTACT_EMAIL_FOR_USER_AGENT=your.email@example.com
+         *
+         * This then gets pulled in to BuildConfig in build.gradle.kts using below BuildConfigField
+         */
+        buildConfigField("String", "CONTACT_EMAIL_FOR_USER_AGENT", "\"${System.getenv("CONTACT_EMAIL_FOR_USER_AGENT")}\"")
     }
 
     buildTypes {
@@ -39,6 +49,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -57,6 +68,10 @@ dependencies {
     // Retrofit and gson for json:
     implementation(libs.retrofit)
     implementation(libs.gson.converter)
+
+    // Coil for image loading (AsyncImage in compose):
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -93,3 +108,13 @@ hilt {
 kapt {
     correctErrorTypes = true
 }
+
+
+// We are using the secrets gradle plugin to keep our email out of version control.
+// Ps The email is required to be placed in all Api calls to the Chicago arts Web Api
+/*
+buildscript {
+    dependencies {
+        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
+    }
+}*/

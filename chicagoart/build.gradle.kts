@@ -6,5 +6,4 @@ plugins {
 
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.android) apply false
-
 }
