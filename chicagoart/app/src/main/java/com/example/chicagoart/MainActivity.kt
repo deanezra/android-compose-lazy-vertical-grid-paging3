@@ -11,8 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.chicagoart.ui.theme.ChicagoArtTheme
+import com.example.chicagoart.viewmodel.ItemsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -20,10 +23,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val itemsViewModel: ItemsViewModel = hiltViewModel()
+            val name = "Android" // TODO: replace this when list of viewmodel.items is pass below
             ChicagoArtTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        name = name,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -44,6 +49,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     ChicagoArtTheme {
-        Greeting("Android")
+        Greeting(name = "Android")
     }
 }
