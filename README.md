@@ -2,9 +2,8 @@
 
 **Author: Dean Ezra**
 
-<img src="./screenshots/app-grid-screenshot.png" width="250">
+[Click here to see a Video of the end result paging](https://github.com/user-attachments/assets/edb906d6-439e-41d4-a71b-65f8d2ae6db5)
 
-[Video here](./screenshots/app-video-showing-paging.mp4) of paging in motion ;-)
 
 This Android application is a proof of concept that demonstrates the integration of the Paging 3 library with Jetpack Compose's LazyVerticalGrid component. 
 
